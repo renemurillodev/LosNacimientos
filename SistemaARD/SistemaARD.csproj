@@ -149,6 +149,12 @@
     <Compile Include="Vistas\PruebaRoles.Designer.cs">
       <DependentUpon>PruebaRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\RegistroUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\RegistroUsuarios.Designer.cs">
+      <DependentUpon>RegistroUsuarios.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\PruebaRoles.resx">
       <DependentUpon>PruebaRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\RegistroUsuarios.resx">
+      <DependentUpon>RegistroUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="LosNacimientos.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
