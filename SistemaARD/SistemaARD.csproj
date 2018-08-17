@@ -32,8 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,11 +54,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aguinaldos.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cargos.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CargosEmpleados.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriasIndemnizaciones.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriasPlanillas.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CorreosEmpleados.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departamentos.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
     </Compile>
     <Compile Include="FPlanillas.cs">
       <SubType>Form</SubType>
@@ -57,11 +90,50 @@
     <Compile Include="FPlanillas.Designer.cs">
       <DependentUpon>FPlanillas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Indemnizaciones.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Login\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Login\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LosNacimientos.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LosNacimientos.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LosNacimientos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LosNacimientos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LosNacimientos.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="PlanillasProduccion.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanillasVentas.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Roles.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TelefonosEmpleados.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TiposTelefonos.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.cs">
+      <DependentUpon>LosNacimientos.tt</DependentUpon>
     </Compile>
     <Compile Include="Vistas\MainForm.cs">
       <SubType>Form</SubType>
@@ -92,6 +164,14 @@
     <EmbeddedResource Include="Vistas\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EntityDeploy Include="LosNacimientos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LosNacimientos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="LosNacimientos.edmx.diagram">
+      <DependentUpon>LosNacimientos.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,6 +184,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LosNacimientos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LosNacimientos.Context.cs</LastGenOutput>
+      <DependentUpon>LosNacimientos.edmx</DependentUpon>
+    </Content>
+    <Content Include="LosNacimientos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LosNacimientos.edmx</DependentUpon>
+      <LastGenOutput>LosNacimientos.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
