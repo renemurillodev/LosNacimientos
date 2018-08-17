@@ -111,7 +111,7 @@ namespace SistemaARD
         //BOTONES PARA ABRIR CADA FORMULARIO EN EL PANEL
         private void btnPlanilla_Click(object sender, EventArgs e)
         {
-            AbrirFormInPanel(new FPlanillas());
+            AbrirFormInPanel(new Vistas.PruebaRoles());
         }
     }
 }
