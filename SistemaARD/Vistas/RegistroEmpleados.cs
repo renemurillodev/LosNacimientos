@@ -43,11 +43,6 @@ namespace SistemaARD.Vistas
             {
                 empleado.Nombres = txtNombres.Text.Trim();
                 empleado.Apellidos = txtApellidos.Text.Trim();
-                string fechaNacimientoYear = Convert.ToString(dtpFechaNacimiento.Value.Year);
-                string fechaNacimientoMes = Convert.ToString(dtpFechaNacimiento.Value.Month);
-                string fechaNacimientoDia = Convert.ToString(dtpFechaNacimiento.Value.Day);
-                string fechaNacimiento = fechaNacimientoYear + "/" + fechaNacimientoMes + "/" + fechaNacimientoDia;
-                empleado.FechaIngreso = Convert.ToDateTime(fechaNacimiento);
                 empleado.FechaNacimiento = dtpFechaNacimiento.Value;
                 empleado.Direccion = txtDireccion.Text.Trim();
                 if(cbxGenero.Text == "Masculino")
@@ -79,11 +74,8 @@ namespace SistemaARD.Vistas
                 empleado.N_Afp = txtNup.Text;
                 empleado.N_Isss = txtNumeroIsss.Text;
                 empleado.N_Nit = txtNumeroNit.Text;
-                string fechaIngresoYear = Convert.ToString(dtpFechaIngreso.Value.Year);
-                string fechaIngresoMes = Convert.ToString(dtpFechaIngreso.Value.Month);
-                string fechaIngresoDia = Convert.ToString(dtpFechaIngreso.Value.Day);
-                string fechaIngreso = fechaIngresoYear + "/" + fechaIngresoMes + "/" + fechaIngresoDia;
-                empleado.FechaIngreso = Convert.ToDateTime(fechaIngreso);
+                
+                empleado.FechaIngreso = dtpFechaIngreso.Value;
                 if (cbxEstado.Text == "Activo")
                 {
                     empleado.Estado = "A";
