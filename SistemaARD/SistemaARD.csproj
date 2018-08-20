@@ -155,6 +155,12 @@
     <Compile Include="Vistas\RegistroUsuarios.Designer.cs">
       <DependentUpon>RegistroUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\TiposDeTelefonos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\TiposDeTelefonos.Designer.cs">
+      <DependentUpon>TiposDeTelefonos.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\RegistroUsuarios.resx">
       <DependentUpon>RegistroUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\TiposDeTelefonos.resx">
+      <DependentUpon>TiposDeTelefonos.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="LosNacimientos.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
