@@ -149,6 +149,12 @@
     <Compile Include="Vistas\PruebaRoles.Designer.cs">
       <DependentUpon>PruebaRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\RegistroEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\RegistroEmpleados.Designer.cs">
+      <DependentUpon>RegistroEmpleados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\RegistroUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\PruebaRoles.resx">
       <DependentUpon>PruebaRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\RegistroEmpleados.resx">
+      <DependentUpon>RegistroEmpleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\RegistroUsuarios.resx">
       <DependentUpon>RegistroUsuarios.cs</DependentUpon>
