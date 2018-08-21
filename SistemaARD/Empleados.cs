@@ -31,21 +31,24 @@ namespace SistemaARD
         public string Apellidos { get; set; }
         public System.DateTime FechaNacimiento { get; set; }
         public string Direccion { get; set; }
-        public string Genero { get; set; }
+        public int Genero_Id { get; set; }
         public string N_Dui { get; set; }
         public string N_Nit { get; set; }
-        public string NombreAFP { get; set; }
+        public int Afp_Id { get; set; }
         public string N_Afp { get; set; }
         public string N_Isss { get; set; }
         public System.DateTime FechaIngreso { get; set; }
-        public string Estado { get; set; }
+        public int Estado_Id { get; set; }
     
+        public virtual Afps Afps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Aguinaldos> Aguinaldos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CargosEmpleados> CargosEmpleados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CorreosEmpleados> CorreosEmpleados { get; set; }
+        public virtual Estados Estados { get; set; }
+        public virtual Generos Generos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Indemnizaciones> Indemnizaciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

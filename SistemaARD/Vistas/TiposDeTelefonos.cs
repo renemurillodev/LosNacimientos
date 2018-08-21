@@ -26,7 +26,7 @@ namespace SistemaARD.Vistas
             }
             else { 
             tiposTel.Nombre = txtNombre.Text.Trim();
-            using (DBEntities db = new DBEntities())
+            using (losnacimientosEntities1 db = new losnacimientosEntities1())
             {
                 db.TiposTelefonos.Add(tiposTel);
                 db.SaveChanges();
@@ -34,6 +34,11 @@ namespace SistemaARD.Vistas
             MessageBox.Show("Tipo de teléfono almacenado con éxito");
                 txtNombre.Text = "";
             }
+        }
+
+        private void TiposDeTelefonos_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -31,7 +31,7 @@ namespace SistemaARD.Vistas
             modelo.Nombre = txtNombre.Text.Trim();
             modelo.Descripcion = txtDescripcion.Text.Trim();
 
-            using (DBEntities db = new DBEntities())
+            using (losnacimientosEntities1 db = new losnacimientosEntities1())
             {
                 if (modelo.Id == 0)
                     db.Roles.Add(modelo);
@@ -47,7 +47,7 @@ namespace SistemaARD.Vistas
         void LlenarDataGrid()
         {
             dataGridView1.AutoGenerateColumns = false;
-            using (DBEntities db = new DBEntities())
+            using (losnacimientosEntities1 db = new losnacimientosEntities1())
             {
                 dataGridView1.DataSource = db.Roles.ToList<Roles>();
             }
@@ -58,7 +58,7 @@ namespace SistemaARD.Vistas
             if (dataGridView1.CurrentRow.Index != -1)
             {
                 modelo.Id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-                using (DBEntities db = new DBEntities())
+                using (losnacimientosEntities1 db = new losnacimientosEntities1())
                 {
                     modelo = db.Roles.Where(x => x.Id == modelo.Id).FirstOrDefault();
                     txtNombre.Text = modelo.Nombre;
@@ -73,7 +73,7 @@ namespace SistemaARD.Vistas
         {
             if (MessageBox.Show("¿Seguro que desea eliminar?", "Eliminar", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (DBEntities db = new DBEntities())
+                using (losnacimientosEntities1 db = new losnacimientosEntities1())
                 {
                     var entry = db.Entry(modelo);
                     if (entry.State == EntityState.Detached)

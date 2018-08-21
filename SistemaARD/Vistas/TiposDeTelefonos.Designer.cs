@@ -82,6 +82,7 @@
             this.Controls.Add(this.lblNombre);
             this.Name = "TiposDeTelefonos";
             this.Text = "Tipos de telefonos";
+            this.Load += new System.EventHandler(this.TiposDeTelefonos_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

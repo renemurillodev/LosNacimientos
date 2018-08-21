@@ -21,16 +21,27 @@ namespace SistemaARD.Vistas
         private void RegistroEmpleados_Load(object sender, EventArgs e)
         {
             Clear();
+            CargarGeneros();
         }
 
         void Clear()
         {
             txtNombres.Text = txtApellidos.Text = txtDireccion.Text = txtNumeroDui.Text = txtNumeroNit.Text = txtNumeroIsss.Text = txtNup.Text = "";
             cbxEstado.Text = "";
-            cbxGenero.Text = "";
             cbxNombreAfp.Text = "";
             dtpFechaNacimiento.Value = DateTime.Now;
             dtpFechaIngreso.Value = DateTime.Now;
+        }
+
+        void CargarGeneros()
+        {
+            using (losnacimientosEntities1 db = new losnacimientosEntities1())
+            {
+                cbxGenero.DataSource = db.Generos.ToList<Generos>();
+                cbxGenero.ValueMember = "Id";
+                cbxGenero.DisplayMember = "Nombre";
+            }
+            
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
@@ -47,13 +58,13 @@ namespace SistemaARD.Vistas
                 empleado.Direccion = txtDireccion.Text.Trim();
                 if(cbxGenero.Text == "Masculino")
                 {
-                    empleado.Genero = "M";
+                    //empleado.Genero = "M";
                 }else if(cbxGenero.Text == "Femenino")
                 {
-                    empleado.Genero = "F";
+                    //empleado.Genero = "F";
                 }else if(cbxGenero.Text == "Otro")
                 {
-                    empleado.Genero = "O";
+                    //empleado.Genero = "O";
                 }
                 else
                 {
@@ -62,11 +73,11 @@ namespace SistemaARD.Vistas
                 empleado.N_Dui = txtNumeroDui.Text;
                 if (cbxNombreAfp.Text == "Confía")
                 {
-                    empleado.NombreAFP = "Confía";
+                    //empleado.NombreAFP = "Confía";
                 }
                 else if (cbxNombreAfp.Text == "Crecer")
                 {
-                    empleado.NombreAFP = "Crecer";
+                    //empleado.NombreAFP = "Crecer";
                 }
                 else
                     MessageBox.Show("Debe seleccionar una AFP");
@@ -78,16 +89,16 @@ namespace SistemaARD.Vistas
                 empleado.FechaIngreso = dtpFechaIngreso.Value;
                 if (cbxEstado.Text == "Activo")
                 {
-                    empleado.Estado = "A";
+                    //empleado.Estado = "A";
                 }
                 else if (cbxEstado.Text == "Inactivo")
                 {
-                    empleado.Estado = "I";
+                    //empleado.Estado = "I";
                 }
                 else
                     MessageBox.Show("Debe seleccionar un estado");
 
-                using (DBEntities db = new DBEntities())
+                using (losnacimientosEntities1 db = new losnacimientosEntities1())
                 {
                     
                     try

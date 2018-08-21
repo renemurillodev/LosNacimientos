@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="losnacimientosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Afps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="Aguinaldos">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,14 +79,28 @@
           <Property Name="Apellidos" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="FechaNacimiento" Type="date" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Genero" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="Genero_Id" Type="int" Nullable="false" />
           <Property Name="N_Dui" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="N_Nit" Type="varchar" MaxLength="17" Nullable="false" />
-          <Property Name="NombreAFP" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Afp_Id" Type="int" Nullable="false" />
           <Property Name="N_Afp" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="N_Isss" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="FechaIngreso" Type="date" Nullable="false" />
-          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Estado_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Generos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="Indemnizaciones">
           <Key>
@@ -218,6 +239,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Empleados_Afps">
+          <End Role="Afps" Type="Self.Afps" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afps">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Afp_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleados_Estados">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Estado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleados_Generos">
+          <End Role="Generos" Type="Self.Generos" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Generos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Genero_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Indemnizaciones_CategoriasIndemnizaciones">
           <End Role="CategoriasIndemnizaciones" Type="Self.CategoriasIndemnizaciones" Multiplicity="1" />
           <End Role="Indemnizaciones" Type="Self.Indemnizaciones" Multiplicity="*" />
@@ -327,6 +384,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="losnacimientosModelStoreContainer">
+          <EntitySet Name="Afps" EntityType="Self.Afps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aguinaldos" EntityType="Self.Aguinaldos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CargosEmpleados" EntityType="Self.CargosEmpleados" Schema="dbo" store:Type="Tables" />
@@ -335,6 +393,8 @@
           <EntitySet Name="CorreosEmpleados" EntityType="Self.CorreosEmpleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departamentos" EntityType="Self.Departamentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Generos" EntityType="Self.Generos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Indemnizaciones" EntityType="Self.Indemnizaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanillasProduccion" EntityType="Self.PlanillasProduccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanillasVentas" EntityType="Self.PlanillasVentas" Schema="dbo" store:Type="Tables" />
@@ -362,6 +422,18 @@
           <AssociationSet Name="FK_CorreosEmpleados_Empleados" Association="Self.FK_CorreosEmpleados_Empleados">
             <End Role="Empleados" EntitySet="Empleados" />
             <End Role="CorreosEmpleados" EntitySet="CorreosEmpleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Afps" Association="Self.FK_Empleados_Afps">
+            <End Role="Afps" EntitySet="Afps" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Estados" Association="Self.FK_Empleados_Estados">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Generos" Association="Self.FK_Empleados_Generos">
+            <End Role="Generos" EntitySet="Generos" />
+            <End Role="Empleados" EntitySet="Empleados" />
           </AssociationSet>
           <AssociationSet Name="FK_Indemnizaciones_CategoriasIndemnizaciones" Association="Self.FK_Indemnizaciones_CategoriasIndemnizaciones">
             <End Role="CategoriasIndemnizaciones" EntitySet="CategoriasIndemnizaciones" />
@@ -405,6 +477,14 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="losnacimientosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Afps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_Empleados_Afps" FromRole="Afps" ToRole="Empleados" />
+        </EntityType>
         <EntityType Name="Aguinaldos">
           <Key>
             <PropertyRef Name="Id" />
@@ -482,21 +562,40 @@
           <Property Name="Apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Genero" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Genero_Id" Type="Int32" Nullable="false" />
           <Property Name="N_Dui" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="N_Nit" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NombreAFP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Afp_Id" Type="Int32" Nullable="false" />
           <Property Name="N_Afp" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="N_Isss" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Estado_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Afps" Relationship="Self.FK_Empleados_Afps" FromRole="Empleados" ToRole="Afps" />
           <NavigationProperty Name="Aguinaldos" Relationship="Self.FK_Aguinaldos_Empleados" FromRole="Empleados" ToRole="Aguinaldos" />
           <NavigationProperty Name="CargosEmpleados" Relationship="Self.FK_CargosEmpleados_Empleados" FromRole="Empleados" ToRole="CargosEmpleados" />
           <NavigationProperty Name="CorreosEmpleados" Relationship="Self.FK_CorreosEmpleados_Empleados" FromRole="Empleados" ToRole="CorreosEmpleados" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK_Empleados_Estados" FromRole="Empleados" ToRole="Estados" />
+          <NavigationProperty Name="Generos" Relationship="Self.FK_Empleados_Generos" FromRole="Empleados" ToRole="Generos" />
           <NavigationProperty Name="Indemnizaciones" Relationship="Self.FK_Indemnizaciones_Empleados" FromRole="Empleados" ToRole="Indemnizaciones" />
           <NavigationProperty Name="PlanillasProduccion" Relationship="Self.FK_PlanillasProduccion_Empleados" FromRole="Empleados" ToRole="PlanillasProduccion" />
           <NavigationProperty Name="PlanillasVentas" Relationship="Self.FK_PlanillasVentas_Empleados" FromRole="Empleados" ToRole="PlanillasVentas" />
           <NavigationProperty Name="TelefonosEmpleados" Relationship="Self.FK_TelefonosEmpleados_Empleados" FromRole="Empleados" ToRole="TelefonosEmpleados" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_Empleados_Estados" FromRole="Estados" ToRole="Empleados" />
+        </EntityType>
+        <EntityType Name="Generos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_Empleados_Generos" FromRole="Generos" ToRole="Empleados" />
         </EntityType>
         <EntityType Name="Indemnizaciones">
           <Key>
@@ -586,6 +685,18 @@
           <Property Name="Rol_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Usuarios_Roles" FromRole="Usuarios" ToRole="Roles" />
         </EntityType>
+        <Association Name="FK_Empleados_Afps">
+          <End Role="Afps" Type="Self.Afps" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afps">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Afp_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Aguinaldos_Empleados">
           <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
           <End Role="Aguinaldos" Type="Self.Aguinaldos" Multiplicity="*" />
@@ -682,6 +793,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Empleados_Estados">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Estado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleados_Generos">
+          <End Role="Generos" Type="Self.Generos" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Generos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="Genero_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Indemnizaciones_Empleados">
           <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
           <End Role="Indemnizaciones" Type="Self.Indemnizaciones" Multiplicity="*" />
@@ -754,7 +889,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="losnacimientosEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Afps" EntityType="Self.Afps" />
           <EntitySet Name="Aguinaldos" EntityType="Self.Aguinaldos" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" />
           <EntitySet Name="CargosEmpleados" EntityType="Self.CargosEmpleados" />
@@ -763,6 +899,8 @@
           <EntitySet Name="CorreosEmpleados" EntityType="Self.CorreosEmpleados" />
           <EntitySet Name="Departamentos" EntityType="Self.Departamentos" />
           <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" />
+          <EntitySet Name="Generos" EntityType="Self.Generos" />
           <EntitySet Name="Indemnizaciones" EntityType="Self.Indemnizaciones" />
           <EntitySet Name="PlanillasProduccion" EntityType="Self.PlanillasProduccion" />
           <EntitySet Name="PlanillasVentas" EntityType="Self.PlanillasVentas" />
@@ -771,6 +909,10 @@
           <EntitySet Name="TelefonosEmpleados" EntityType="Self.TelefonosEmpleados" />
           <EntitySet Name="TiposTelefonos" EntityType="Self.TiposTelefonos" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Empleados_Afps" Association="Self.FK_Empleados_Afps">
+            <End Role="Afps" EntitySet="Afps" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
           <AssociationSet Name="FK_Aguinaldos_Empleados" Association="Self.FK_Aguinaldos_Empleados">
             <End Role="Empleados" EntitySet="Empleados" />
             <End Role="Aguinaldos" EntitySet="Aguinaldos" />
@@ -803,6 +945,14 @@
             <End Role="Empleados" EntitySet="Empleados" />
             <End Role="CorreosEmpleados" EntitySet="CorreosEmpleados" />
           </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Estados" Association="Self.FK_Empleados_Estados">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Generos" Association="Self.FK_Empleados_Generos">
+            <End Role="Generos" EntitySet="Generos" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
           <AssociationSet Name="FK_Indemnizaciones_Empleados" Association="Self.FK_Indemnizaciones_Empleados">
             <End Role="Empleados" EntitySet="Empleados" />
             <End Role="Indemnizaciones" EntitySet="Indemnizaciones" />
@@ -833,7 +983,15 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="losnacimientosModelStoreContainer" CdmEntityContainer="DBEntities">
+        <EntityContainerMapping StorageEntityContainer="losnacimientosModelStoreContainer" CdmEntityContainer="losnacimientosEntities1">
+          <EntitySetMapping Name="Afps">
+            <EntityTypeMapping TypeName="losnacimientosModel.Afps">
+              <MappingFragment StoreEntitySet="Afps">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Aguinaldos">
             <EntityTypeMapping TypeName="losnacimientosModel.Aguinaldos">
               <MappingFragment StoreEntitySet="Aguinaldos">
@@ -905,14 +1063,30 @@
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Genero_Id" ColumnName="Genero_Id" />
                 <ScalarProperty Name="N_Dui" ColumnName="N_Dui" />
                 <ScalarProperty Name="N_Nit" ColumnName="N_Nit" />
-                <ScalarProperty Name="NombreAFP" ColumnName="NombreAFP" />
+                <ScalarProperty Name="Afp_Id" ColumnName="Afp_Id" />
                 <ScalarProperty Name="N_Afp" ColumnName="N_Afp" />
                 <ScalarProperty Name="N_Isss" ColumnName="N_Isss" />
                 <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Estado_Id" ColumnName="Estado_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estados">
+            <EntityTypeMapping TypeName="losnacimientosModel.Estados">
+              <MappingFragment StoreEntitySet="Estados">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Generos">
+            <EntityTypeMapping TypeName="losnacimientosModel.Generos">
+              <MappingFragment StoreEntitySet="Generos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
